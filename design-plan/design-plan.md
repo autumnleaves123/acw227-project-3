@@ -1,22 +1,22 @@
 # Project 3 - Design & Plan
 
-Your Name:
+Your Name: Autumn C. Watt
 
 ## 1. Persona
 
-I've selected **[Abby/Patricia/Patrick/Tim]** as my persona.
+I've selected **[Abby]** as my persona.
 
-I've selected my persona because... [Tell us why you picked your persona in 1-3 sentences.]
+I've selected my persona because... I strive to create a minimalistic, simple, and intuitive design that can easily be accessed by viewers. Only options available to the user will show (so no delete button if the user is not logged in). I plan on having a main bar on the side to keep all options and relevant info available.
 
 ## 2. Sketches & Wireframes
 
 ### Sketches
 
-[Insert your sketches here.]
+![](project3_sketch.jpeg)
 
 ### Wirefames
 
-[Insert your wireframes here.]
+![](project3_wireframe.jpeg)
 
 [Explain why your design would be effective for your persona. 1-3 sentences.]
 
@@ -24,13 +24,72 @@ I've selected my persona because... [Tell us why you picked your persona in 1-3 
 
 [Describe the structure of your database. You may use words or a picture. A bulleted list is probably the simplest way to do this.]
 
-Table: movies
-* field 1: description...
-* field...
+Table: photos
+* id: INTEGER NOT NULL AUTOINCREMENT UNIQUE PRIMARY KEY
+* user_id: INTEGER NOT NULL // user who uploaded picture
+* image_path: TEXT NOT NULL
+* cred: TEXT
+
+Table: users
+* id: INTEGER NOT NULL AUTOINCREMENT UNIQUE PRIMARY KEY
+* username: TEXT NOT NULL
+* password: TEXT NOT NULL
+* session: INTEGER UNIQUE // random number generated
+
+Table: tags
+* id: INTEGER NOT NULL AUTOINCREMENT UNIQUE PRIMARY KEY
+* tag: TEXT NOT NULL UNIQUE
+
+Table: photo_tags
+* id: INTEGER NOT NULL AUTOINCREMENT UNIQUE PRIMARY KEY
+* tag_id: INTEGER NOT NULL
+* photo_id: INTEGER NOT NULL
 
 ## 4. Database Query Plan
 
 [Plan your database queries. You may use natural language, pseudocode, or SQL.]
+
+// check login
+* SELECT * FROM users where username = :username AND password = :password;
+* Generate new session number
+
+// check if session is active
+* Make sure session key number is still valid
+
+// logout
+* Set session key to null
+
+// view all images at once
+* SELECT path FROM photos;
+
+// view all images for a *tag* at once
+* SELECT photo_id FROM photo_tags WHERE tag_id = :tag;
+
+// view all tags for a *single* image
+* SELECT tag_id FROM photo_tags WHERE photo_id = :photo;
+
+// upload a new image
+* INSERT INTO photos(user_id, path) VALUES (:user_id, :path);
+* user must be logged in
+
+// delete an image
+// Make sure you clean up any relationships to the image in other tables. (Where the image is a foreign key.) Make sure you delete the corresponding file upload from disk.
+* DELETE FROM photos WHERE photo_id = :photo;
+* DELETE FROM photo_tags WHERE photo_id = :photo;
+* user logged in must be the creator of the image
+
+// view all tags at once
+* SELECT tag FROM tags;
+
+// add an existing tag to image
+* INSERT INTO photo_tags(photo_id, tag_id) VALUES (:photo_id, :tag_id);
+
+// add a new tag to an image
+* INSERT INTO photo_tags(photo_id, tag_id) VALUES (:photo_id, :tag_id);
+
+// remove a tag from an image
+* DELETE FROM photo_tags WHERE tag_id = :tag;
+* logged in user must be user who uploaded image
 
 ## 5. Structure and Pseudocode
 
@@ -40,7 +99,7 @@ Table: movies
 
 * index.php - main page.
 * includes/init.php - stuff that useful for every web page.
-* TODO
+* sidebar.php - sidebar with pages, login info, and tags listed.
 
 ### Pseudocode
 
@@ -52,8 +111,25 @@ Table: movies
 Pseudocode for index.php...
 
 include init.php
+include sidebar.php
 
-TODO
+query database for images
+
+create array for images to be displayed
+
+if tag is chosen
+  add all photos to array with tag
+else if no tag is chosen
+  set queried images to the array
+
+user-defined function to display photos in array
+(I would like to give a fluid and seamless sized photogallery, but not sure how to accomplish this)
+
+if photo displayed was created by logged in user
+  display a hover x
+  if hover x is clicked
+    delete photo
+(this might be ambitious)
 ```
 
 #### includes/init.php
@@ -65,19 +141,92 @@ messages = array to store messages for user (you may remove this)
 
 db = connect to db
 
+query function
+
+user login function
+
+new session function
+
 ...
 
 ```
 
-#### TODO
+#### includes/sidebar.php
 
 ```
-TODO
+header title
+
+print display messages
+
+// LOGIN //
+if user is not logged in
+  display username textbox
+  display password textbox
+  display login button
+else if user is logged in
+  display message about who is logged in
+  display logout button
+
+if login button is pressed
+  query database and create session
+if logout button is pressed
+  delete session
+
+// UPLOAD FORM //
+display tag box
+display file upload
+display submit button
+
+if logged in
+  submit button can hover and be pressed
+  insert photo into database
+  filter file and make sure obeys size constraints
+
+// TAGS //
+query database for all tags
+display all tags in list fashion as hyperlinks
+
+if hover over tag
+  change color
+else if tag is pressed (current tag)
+  change view of gallery to only show photos with that tag
+
+// ADD TAG //
+query database for all photos
+display all photos in a dropdown
+
+query database for all tags
+display all tags in a dropdown
+display 'OR'
+textbox for adding a new tag
+
+create "make changes" button
+
+if photo dropdown set and (tag dropdown set or tag textbox written) and button pressed
+  insert new tag for image
+
+// REMOVE TAG //
+if user logged in
+  query database for all photos created by user
+  display in dropdown
+
+  query database for all tags of the photo selected in first dropdown
+  display in new dropdown
+
+  create "make changes" button
+
+  if first and second drop downs set and button pressed
+    delete tag from image
+
+// BOTTOM //
+display credits to me for creating the website (kind of like footer)
 ```
 
 ## 6. Seed Data - Username & Passwords
 
 [List the usernames and passwords for your users]
 
-* user1 : password1
-* TODO
+* user1 : janedoe
+* password1: gobigred
+* user2 : gm
+* password2: liftthechorus
