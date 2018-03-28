@@ -1,0 +1,95 @@
+html {
+  font-family: Courier, monospace;
+  min-width: 800px;
+}
+
+body {
+  height: auto;
+  overflow: auto;
+}
+
+h1 {
+  font-size: 225%;
+  color: white;
+  font-weight: normal;
+  margin: 0 0 30px 0;
+}
+
+aside {
+  width:250px;
+  height: 1500px; /*May need to change */
+  top: 0px;
+  bottom: 0px;
+  border-color: black;
+  background-color: grey;
+  display: block;
+  position: relative;
+  float:left;
+}
+
+#sidebar {
+  margin: 15px;
+}
+
+#main-div {
+  border-left: 2px solid black;
+  width: calc(100% - 252px);
+  background-color: none;
+  position: relative;
+  float:right;
+  height: auto ;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* -- Sidebar form stylings -- */
+.form-div {
+  margin: 10px 0 30px 0;
+}
+
+.form-div h2 {
+  margin: 5px 0;
+}
+
+.input-spacing {
+  margin: 2px 0;
+  width: calc(100% - 8px);
+}
+
+.no-margin {
+  margin: 0;
+}
+
+/* -- Image gallery styling -- */
+.column {
+  flex: calc(100%/3);
+  padding: 0;
+}
+
+.column img {
+  width: 100%;
+  margin-top: 0;
+  vertical-align: middle;
+}
+
+/* -- Button styling -- */
+
+button[type="submit"] {
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    padding: 10px;
+    font-family: courier;
+    background-color: white;
+    border-style: solid;
+    font-size: 100%;
+    width: 110px;
+    text-align: center;
+}
+
+button[type="submit"]:hover {
+  color: #b5e0d3;
+  border-color: #b5e0d3;
+}
