@@ -1,34 +1,66 @@
 html {
   font-family: Courier, monospace;
   min-width: 800px;
+  height: 100%;
 }
 
 body {
-  height: auto;
   overflow: auto;
+  min-height: 100%;
+  height: auto;
 }
 
 h1 {
   font-size: 225%;
-  color: white;
+  color: grey;
   font-weight: normal;
   margin: 0 0 30px 0;
 }
 
+#title {
+  text-decoration: none;
+}
+
+#tag-box {
+  margin-left: 20px;
+}
+
+.tag-link {
+  color: grey;
+  text-decoration: none;
+}
+
+.tag-link:hover {
+  color: black;
+}
+
+h1:hover {
+  color: #b5e0d3;
+}
+
 aside {
   width:250px;
-  height: 1500px; /*May need to change */
+  /*height: 100%;*/ /*May need to change */
   top: 0px;
   bottom: 0px;
   border-color: black;
-  background-color: grey;
+  background-color: white;
   display: block;
   position: relative;
   float:left;
+  flex-shrink: 0;
+  min-height: 100%;
 }
 
 #sidebar {
   margin: 15px;
+}
+
+#container {
+  overflow:hidden;
+  display: flex;
+  min-height: 700px; /* arbitrary */
+  height: auto;
 }
 
 #main-div {
@@ -42,6 +74,36 @@ aside {
   bottom: 0px;
   display: flex;
   flex-wrap: wrap;
+  min-height: 100%;
+}
+
+.small{
+  font-size: 70%;
+}
+
+#singleview-div {
+  width: 60%;
+  background-color: none;
+  position: relative;
+  margin: 50px 0 0 20%;
+  height: auto ;
+  top: 0px;
+  bottom: 0px;
+  display: block;
+  flex-wrap: wrap;
+}
+
+#singleview-div img {
+  width:100%;
+}
+
+#single-view-input {
+  width: 200px;
+  margin: 2px 0;
+}
+
+.single-view-form {
+  margin: 50px 0;
 }
 
 /* -- Sidebar form stylings -- */
@@ -56,6 +118,14 @@ aside {
 .input-spacing {
   margin: 2px 0;
   width: calc(100% - 8px);
+}
+h3 {
+  font-weight: normal;
+  font-size: 70%;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
 }
 
 .no-margin {
@@ -92,4 +162,8 @@ button[type="submit"] {
 button[type="submit"]:hover {
   color: #b5e0d3;
   border-color: #b5e0d3;
+}
+
+.single-view-form button[type="submit"] {
+  width: 200px;
 }

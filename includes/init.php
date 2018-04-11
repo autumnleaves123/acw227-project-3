@@ -64,9 +64,18 @@ function open_or_init_sqlite_db($db_filename, $init_sql_filename) {
   return NULL;
 }
 
+function photo_exists($id) {
+  global $db;
+
+  $sql = "SELECT * FROM photos WHERE photos.id = :id;";
+  $params = array(":id"=>$id);
+  $records = exec_sql_query($db, $sql, $params)->FetchAll();
+
+  return !empty($records); // if $records is not empty, image exists
+}
 //user-defined function that takes in an array of square images and
 //formats them together in a grid
-//$images must be an associate array
+//$images must be a database query
 function gallery($images){
   $image_count = 1;
   $number_of_images = count($images);
@@ -75,12 +84,89 @@ function gallery($images){
 
   foreach($images as $image){
     if ($image_count == 1) { echo "<div class='column'>"; }
-    echo "<img src='". $image["image_path"] . "' >";
+    echo "<a href='image.php?id=" . $image["id"] . "'><img src='". $image["image_path"] . "' ></a>";
     if ($image_count > $images_in_column) { echo "</div>"; $image_count = 0; }
 
     $image_count += 1;
   }
 }
+
+//user-defined function that takes in an array of square images and
+//formats them together in a grid
+//$images must be an associate array
+function single_view($photo_records, $tag_records){
+  echo "<img src='". $photo_records[0]["image_path"] . "' >";
+  echo "<p><strong>User Uploaded: </strong>" . htmlspecialchars($photo_records[0]["username"]) . "</p>";
+  echo "<p><strong>File Path: </strong>" . $photo_records[0]["image_path"] . "</p>";
+
+  echo "<p><strong>Source Credit: </strong>";
+  if (empty($photo_records[0]["credit"])) { // if no credit, assuming user made
+    echo "created by user";
+  } else {
+    echo htmlspecialchars($photo_records[0]["credit"]);
+  }
+  echo "</p>";
+
+  echo "<p><strong>Tags: </strong>";
+  if (empty($tag_records)) {
+    echo "no tags";
+  } else {
+    for ($i=0; $i<count($tag_records); $i++) {
+      echo htmlspecialchars($tag_records[$i]["tag"]);
+      if ($i < count($tag_records)-1) { // no comma after last tag
+        echo ", ";
+      }
+    }
+  }
+  echo "</p>";
+}
+
+function add_tag($tag) {
+  global $db;
+
+  //check if tag exists in tag table
+  $sql = "SELECT * FROM tags WHERE tags.tag = :tag;";
+  $params = array(":tag"=>$tag);
+  $records = exec_sql_query($db, $sql, $params)->FetchAll();
+
+  // if $records is not empty, tag already exists
+  if (empty($records)) { // tag doesn't exist, so add
+    $sql = "INSERT INTO tags (tag) VALUES (:tag);";
+    var_dump($sql);
+    $params = array(":tag"=>$tag);
+    $records = exec_sql_query($db, $sql, $params)->FetchAll();
+  }
+}
+
+function add_relationship($photo_id, $tag_id) {
+  global $db;
+  var_dump("in add relationship");
+
+  // check if tag photo relationship file_exists
+  $sql = "SELECT * FROM photo_tags WHERE photo_tags.tag_id = :tag_id AND photo_tags.photo_id = :photo_id;";
+  $params = array(":photo_id"=>$photo_id, ":tag_id"=>$tag_id);
+  $records = exec_sql_query($db, $sql, $params)->FetchAll();
+
+  var_dump($records);
+  // if $records is not empty, tag photo relationship already exists so don't add
+  if (empty($records)) { // else duplicate so don't add
+
+    $sql = "INSERT INTO photo_tags (tag_id, photo_id) VALUES (:tag_id, :photo_id);";
+    $params = array(":tag_id"=>$tag_id, ":photo_id"=>$photo_id);
+    $records = exec_sql_query($db, $sql, $params)->FetchAll();
+  }
+}
+
+function tag_id_query($tag) {
+  global $db;
+
+  $sql = "SELECT * FROM tags WHERE tags.tag = :tag;";
+  $params = array(":tag"=>$tag);
+  $records = exec_sql_query($db, $sql, $params)->FetchAll();
+  $tag_id = $records[0]["id"];
+  return $tag_id;
+}
+
 
 // open connection to database
 $db = open_or_init_sqlite_db("gallery.sqlite", "init/init.sql");
