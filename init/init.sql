@@ -36,21 +36,21 @@ INSERT INTO users(username, password) VALUES ('janedoe', '$2y$10$92IushmzxvE9gSi
 INSERT INTO users(username, password) VALUES ('gm', '$2y$10$jFXqOXL7F.Q4rSBSNosGEus6cF2lOZ8vIVJoFpQCaGXOGggIfaqzq'); /* Password is 'liftthechorus' */
 
 /* You should have at least 10 images. */
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/autumn.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/beach.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/corn.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/dock.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/ferriswheel.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/ice.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/LWP3.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/manhattan.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/moon.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/nyc.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/oneworld.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/sailboat.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/skeleton.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/sunset.jpg');
-INSERT INTO photos(user_id, image_path) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/water.jpg');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/autumn.jpg', 'Ling Wang Photography');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/beach.jpg', 'Autumn C. Watt');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/corn.jpg', 'Jay Mondkar');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/dock.jpg', 'Autumn C. Watt');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/ferriswheel.jpg', 'Jay Mondkar');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/ice.jpg', 'Autumn C. Watt');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='gm'), 'uploads/images/LWP3.jpg', 'Ling Wang Photography');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/manhattan.jpg', 'Autumn C. Watt');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/moon.jpg', 'Jay Mondkar');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/nyc.jpg', 'Autumn C. Watt');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/oneworld.jpg', 'Autumn C. Watt');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/sailboat.jpg', 'Jay Patel');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/skeleton.jpg', 'Jae Noh');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/sunset.jpg', 'Jay Mondkar');
+INSERT INTO photos(user_id, image_path, credit) VALUES ((SELECT id FROM users WHERE username='janedoe'), 'uploads/images/water.jpg', 'Tyler Brewer');
 
 /* You should at least have 5 tags. */
 INSERT INTO tags(tag) VALUES ('nature');

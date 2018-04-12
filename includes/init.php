@@ -138,16 +138,14 @@ function add_tag($tag) {
   }
 }
 
-function add_relationship($photo_id, $tag_id) {
+function add_relationship($tag_id, $photo_id) {
   global $db;
-  var_dump("in add relationship");
 
   // check if tag photo relationship file_exists
   $sql = "SELECT * FROM photo_tags WHERE photo_tags.tag_id = :tag_id AND photo_tags.photo_id = :photo_id;";
   $params = array(":photo_id"=>$photo_id, ":tag_id"=>$tag_id);
   $records = exec_sql_query($db, $sql, $params)->FetchAll();
 
-  var_dump($records);
   // if $records is not empty, tag photo relationship already exists so don't add
   if (empty($records)) { // else duplicate so don't add
 

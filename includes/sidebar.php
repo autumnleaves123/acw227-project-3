@@ -7,6 +7,9 @@ if (isset($_POST["upload"]) and isset($_FILES["picture_file"])) {
   $upload_info = $_FILES["picture_file"];
   $credit = filter_input(INPUT_POST, 'credit', FILTER_SANITIZE_STRING);
   $tags = filter_input(INPUT_POST, 'tag', FILTER_SANITIZE_STRING);
+  var_dump($tags);
+
+  $user_id = user_id($current_user);
 
   if ($_FILES["picture_file"]['error'] == 'UPLOAD_ERROR_OK') {
     $file_name = basename($upload_info["name"]);
@@ -14,7 +17,7 @@ if (isset($_POST["upload"]) and isset($_FILES["picture_file"])) {
     $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
     $user_id = user_id($current_user);
 
-    if ($user_id) {
+    if ($user_id) { // must be logged in
       // insert picture into PHOTOS table
       $sql = "INSERT INTO photos(user_id, image_path, credit) VALUES (:user_id, :image_path, :credit);";
       $params = array(
@@ -32,10 +35,8 @@ if (isset($_POST["upload"]) and isset($_FILES["picture_file"])) {
       } else {
         array_push($messages, "failed to upload file.");
       }
-
       // insert picture into PHOTO_TAGS table
       $tag_array = explode(",",$tags); // break up tags
-      var_dump($tag_array);
 
       foreach ($tag_array as $tag) {
         $tag = trim(filter_var($tag,FILTER_SANITIZE_STRING));
@@ -85,7 +86,7 @@ $params = array();
 $tagdisplay_records = exec_sql_query($db, $sql, $params)->FetchAll();
 
 // GET CREDITS
-$sql = "SELECT credit FROM photos ORDER BY credit ASC;";
+$sql = "SELECT DISTINCT credit FROM photos ORDER BY credit ASC;";
 $params = array();
 $creditdisplay_records = exec_sql_query($db, $sql, $params)->FetchAll();
 ?>
@@ -143,13 +144,13 @@ $creditdisplay_records = exec_sql_query($db, $sql, $params)->FetchAll();
 
   <!--UPLOAD-->
   <?php if ($current_user) { ?>
-    <form class="form-div" enctype="multipart/form-data" action="index.php" method="POST">
+    <form class="form-div" enctype="multipart/form-data" action="" method="POST">
       <h2>Upload a Picture</h2>
       <input class="input-spacing" type="text" name="tag" placeholder="tag(s)" required/><br>
       <input class="input-spacing" type="text" name="credit" placeholder="photo credit"/><br>
       <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
       <input name="picture_file" type="file" required></input>
-      <button name="upload" type="submit">Upload</button>
+      <button name="upload" value="foo" type="submit">Upload</button>
     </form>
   <?php } ?>
 

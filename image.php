@@ -4,7 +4,6 @@
 
 if ((isset($_GET["id"]) or !empty($_GET["id"])) && photo_exists($_GET["id"])) {
   $photo_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
-  $single_view_image = "$photo_id";
 } else {
   header("Location: index.php");
   exit;
@@ -80,6 +79,7 @@ if (isset($_POST["remove_tag"]) && !empty($_POST["remove_tag"])) {
     $params = array(":photo_id"=>$photo_id, ":tag_id"=>$tag_id);
 
     try {
+      var_dump("in try");
       exec_sql_query($db, $sql, $params)->FetchAll();
       array_push($messages, "tag removal successful");
       delete_empty_tag($tag);
@@ -115,13 +115,19 @@ if (isset($_POST["delete_image"]) && !empty($_POST["delete_image"])) {
     }
   }
 
+  // TODO: Delete file
+  $sql = "SELECT image_path FROM photos WHERE photos.id = :photo_id;";
+  $params = array(":photo_id"=>$photo_id);
+  $records = exec_sql_query($db, $sql, $params)->FetchAll();
+  unlink($records[0]["image_path"]);
+
   // delete photo from PHOTOS table
   $sql = "DELETE FROM photos WHERE photos.id = :photo_id;";
   $params = array(":photo_id"=>$photo_id);
   exec_sql_query($db, $sql, $params)->FetchAll();
 
-  // TODO: Delete file
-
+  header("Location: index.php");
+  exit;
 }
 
 
