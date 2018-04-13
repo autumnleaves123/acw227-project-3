@@ -132,7 +132,6 @@ function add_tag($tag) {
   // if $records is not empty, tag already exists
   if (empty($records)) { // tag doesn't exist, so add
     $sql = "INSERT INTO tags (tag) VALUES (:tag);";
-    var_dump($sql);
     $params = array(":tag"=>$tag);
     $records = exec_sql_query($db, $sql, $params)->FetchAll();
   }
