@@ -13,18 +13,18 @@
 /images/*
 
 # Tell Git to NOT ignore your EACH seed file in your your upload folders.
-!/images/autumn.jpeg
-!/images/beach.jpeg
-!/images/corn.jpeg
-!/images/dock.jpeg
-!/images/ferriswheel.jpeg
-!/images/ice.jpeg
-!/images/LWP3.jpeg
-!/images/manhattan.jpeg
-!/images/moon.jpeg
-!/images/nyc.jpeg
-!/images/oneworld.jpeg
-!/images/sailboat.jpeg
-!/images/skeleton.jpeg
-!/images/sunset.jpeg
-!/images/water.jpeg
+!/images/autumn.jpg
+!/images/beach.jpg
+!/images/corn.jpg
+!/images/dock.jpg
+!/images/ferriswheel.jpg
+!/images/ice.jpg
+!/images/LWP3.jpg
+!/images/manhattan.jpg
+!/images/moon.jpg
+!/images/nyc.jpg
+!/images/oneworld.jpg
+!/images/sailboat.jpg
+!/images/skeleton.jpg
+!/images/sunset.jpg
+!/images/water.jpg
