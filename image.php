@@ -79,7 +79,6 @@ if (isset($_POST["remove_tag"]) && !empty($_POST["remove_tag"])) {
     $params = array(":photo_id"=>$photo_id, ":tag_id"=>$tag_id);
 
     try {
-      var_dump("in try");
       exec_sql_query($db, $sql, $params)->FetchAll();
       array_push($messages, "tag removal successful");
       delete_empty_tag($tag);
